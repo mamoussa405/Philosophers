@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:02:19 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/25 15:15:32 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:30:32 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,26 @@ void   copy_data(t_philo *philo, t_data *data)
     philo->num_of_t_to_eat = data->num_of_t_to_eat;
 }
 
-void    create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
+uint8_t join_threads(size_t philo_number, t_philo *philos)     
+{
+    size_t i;
+
+    i = 0;
+    while (philo_number--)
+    {
+        if (pthread_join(philos[i].philo_id, NULL))
+        {
+            error("Failed to join the thread: ");
+            write(2, &i, 1);
+            write(2, "\n", 1);
+            return (1);
+        }
+        i++;
+    }
+    return (0);
+}
+
+uint8_t create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
 {
     size_t  i;
     size_t  philo_number_tmp;
@@ -43,12 +62,18 @@ void    create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
         philos[i].philo_index = i; /* store the index of each philo */
         philos[i].forks = forks; /*  store the array of forks for each philo */
         copy_data(&philos[i], data); /* copy the data to each philo */
-        pthread_create(&philos[i].philo_id, NULL, tasks, &philos[i]);
+        if (pthread_create(&philos[i].philo_id, NULL, tasks, &philos[i]))
+        {
+            error("Failed to create the thread: ");
+            write(2, &i, 1);
+            write(2, "\n", 1);
+            return (1);
+        }
         i++;
     }
     /* join the main thread with other threads */
-    i = 0;
-    while (data->number_of_philo--)
-        pthread_join(philos[i++].philo_id, NULL);
+    if (join_threads(data->number_of_philo, philos))
+        return (1);
     /******************************************/
+    return (0);
 }
