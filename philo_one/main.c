@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 17:09:51 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/25 17:29:19 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:08:26 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,18 @@ int	main(int argc, char **argv)
 	/* First let's create an array of forks */
 	forks = create_mutex(data->number_of_philo);
 	if (!forks)
+	{
+		free_data(data);
 		return (1);
+	}		
 	/****************************************/
 	/* Now let's create the threads (philosophers) and store thier ID */
 	philos = (t_philo*)malloc(sizeof(t_philo) * data->number_of_philo); /* struct to store informations about each philo */
-	if (!philos)
-	{
-		write(2, "Malloc failled\n",
-		ft_strlen("Malloc failled\n"));
-		return (1);
-	}
-	if (create_threads(philos, data, forks))
+	if (main_helper(philos, data, forks))
 		return (1);
 	/*******************************************************************/
+	free_philo(philos);
+	free_forks(forks, data->number_of_philo);
+	free_data(data);
 	return (0);
 }

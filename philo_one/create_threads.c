@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:02:19 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/25 17:30:32 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/25 17:44:55 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ uint8_t create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
         }
         i++;
     }
-    /* join the main thread with other threads */
+    /* join the main thread with the other threads */
     if (join_threads(data->number_of_philo, philos))
         return (1);
     /******************************************/

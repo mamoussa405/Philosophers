@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 16:09:21 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/25 17:09:12 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/25 18:59:16 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,6 @@ uint8_t	is_number(char  *number);
 uint8_t	create_threads(t_philo  *philos, t_data *data, pthread_mutex_t *forks);
 pthread_mutex_t	*create_mutex(size_t number_of_philo);
 void	error(char *string);
+void    free_data(t_data *data);
+uint8_t    free_forks(pthread_mutex_t *forks, size_t philo_number);
+void    free_philo(t_philo *philos);
