@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 17:09:51 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/21 12:20:27 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/25 15:20:00 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ uint8_t	check_args(int argc, char **argv, t_data *data)
 		if (length == 20)
 			if (check_args_helper(data, argv[i], length))
 				return (1);
-		/*-----------------------------------------------------*/
+		/*****************************************************/
 		store_data(data, argv[i], i);
 		i++;
 	}
@@ -68,30 +68,59 @@ t_data	*read_data(int argc, char **argv)
 {
 	t_data	*data;
 
-	if (argc < 5 || argc > 6) /* Check for the number of arguments */
+	/* Check if the number of arguments were respected */
+	if (argc < 5 || argc > 6)
 	{
 		write(2, "Wrong number of arguments\n",
 		ft_strlen("Wrong number of arguments\n"));
 		return (NULL);
 	}
+	/***************************************************/
 	data = (t_data*)malloc(sizeof(t_data)); /* Allocate the struct to store data */
-	if (!data) /* In case malloc failed to allocate the given memroy */
+	/* In case malloc failed to allocate the given memory */
+	if (!data)
 	{
 		write(2, "Malloc failled\n",
 		ft_strlen("Malloc failled\n"));
 		return (NULL);
 	}
-	if (check_args(argc, argv, data)) /* Now let's check if the arguments are valid */
+	/******************************************************/
+	/* Now let's check if the arguments are valid */
+	if (check_args(argc, argv, data))
 		return (NULL);
+	/*********************************************/
 	return (data);
 }
 
 int	main(int argc, char **argv)
 {
-    t_data	*data;
+    t_data			*data;
+	t_philo			*philos;	
+	pthread_mutex_t	*forks;
 
-	data = read_data(argc, argv); /* read and parse data */
+	/* Read and parese data and check if an error occured */
+	data = read_data(argc, argv);
 	if (!data)
 		return (1);
+	/******************************************************/
+	/* First let's create an array of forks */
+	forks = create_mutex(data->number_of_philo);
+	if (!forks)
+	{
+		write(2, "Malloc failled\n",
+		ft_strlen("Malloc failled\n"));
+		return (1);
+	}
+	/****************************************/
+	/* Now let's create the threads (philosophers) and store thier ID */
+	philos = (t_philo*)malloc(sizeof(t_philo) * data->number_of_philo); /* struct to store informations about each philo */
+	if (!philos)
+	{
+		write(2, "Malloc failled\n",
+		ft_strlen("Malloc failled\n"));
+		return (1);
+	}
+	create_threads(philos, data, forks);
+	/*******************************************************************/
 	return (0);
 }
