@@ -6,21 +6,11 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:02:19 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/25 17:44:55 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/28 18:31:51 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-
-void    *tasks(void *arg)
-{
-    t_philo *philos;
-
-    philos = (t_philo*)arg;
-    while (1)
-        printf("philo %zu is thinking\n", philos->philo_index);
-    return (NULL);
-}
 
 void   copy_data(t_philo *philo, t_data *data) 
 {

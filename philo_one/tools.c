@@ -6,11 +6,21 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 17:36:28 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/21 11:48:22 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:44:41 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+int64_t modulos(int64_t index, int64_t mod)
+{
+    int64_t res;
+
+    res = index % mod;
+    if (index < 0)
+        res += mod;
+    return res;
+}
 
 size_t  ft_strlen(char *string)
 {

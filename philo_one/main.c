@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 17:09:51 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/25 19:08:26 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:47:53 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_data	*read_data(int argc, char **argv)
 	/*********************************************/
 	return (data);
 }
+
 
 int	main(int argc, char **argv)
 {
