@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:02:19 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/28 18:31:51 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/03 13:17:21 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,32 @@ void   copy_data(t_philo *philo, t_data *data)
     philo->num_of_t_to_eat = data->num_of_t_to_eat;
 }
 
-uint8_t join_threads(size_t philo_number, t_philo *philos)     
+void    controle_the_threads(t_philo *philos, t_data *data)
 {
-    size_t i;
+    register size_t     i;
+    size_t             current_time;
 
-    i = 0;
-    while (philo_number--)
+    while (1)
     {
-        if (pthread_join(philos[i].philo_id, NULL))
+        i = 0;
+        while (i < data->number_of_philo)
         {
-            error("Failed to join the thread: ");
-            write(2, &i, 1);
-            write(2, "\n", 1);
-            return (1);
+            usleep(10);
+            current_time = get_time();
+            if (current_time - philos[i].start >= philos[i].time_to_die)
+            {
+                printf("%zu %lld died\n", get_time(), philos[i].philo_index);
+                i = 0;
+                while (i < data->number_of_philo)
+                {
+                    pthread_mutex_lock(&philos[i].print);
+                    i++;
+                }
+                break;
+            }
+            i++;
         }
-        i++;
     }
-    return (0);
 }
 
 uint8_t create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
@@ -51,6 +60,8 @@ uint8_t create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
     {
         philos[i].philo_index = i; /* store the index of each philo */
         philos[i].forks = forks; /*  store the array of forks for each philo */
+        philos[i].start = get_time(); /* store the creation time for each philo */
+        pthread_mutex_init(&philos[i].print, NULL); /* init the mutex that will allow the thread to print its state */
         copy_data(&philos[i], data); /* copy the data to each philo */
         if (pthread_create(&philos[i].philo_id, NULL, tasks, &philos[i]))
         {
@@ -61,9 +72,8 @@ uint8_t create_threads(t_philo *philos, t_data *data, pthread_mutex_t *forks)
         }
         i++;
     }
-    /* join the main thread with the other threads */
-    if (join_threads(data->number_of_philo, philos))
-        return (1);
+    /* controle the death of each philo */
+    controle_the_threads(philos, data);
     /******************************************/
     return (0);
 }

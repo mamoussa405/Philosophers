@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 16:09:21 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/29 15:05:04 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:40:48 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct s_philo /* Struct to store the data about each philo */
 	pthread_t	    philo_id; /* var to store the philo id */
     int64_t         philo_index; /* var to store the philo index */
     pthread_mutex_t *forks; /* var to store an array of forks */
-    int8_t          was_sleeping;
+    size_t          start; /* vat to store the creation time for each philo and the time he start eating*/
+    pthread_mutex_t print;
 }				t_philo;
 
 size_t	ft_strlen(char  *string);
@@ -55,5 +56,7 @@ void    ft_sleep(t_philo *philos);
 void    think(t_philo *philos);
 uint8_t main_helper(t_philo *philos, t_data *data, pthread_mutex_t *forks);
 int64_t modulos(int64_t index, int64_t mod);
+size_t get_time(void);
+void	think(t_philo *philos);
 #define TO_USECOND 1e3
 #define TO_MSECOND 1e3

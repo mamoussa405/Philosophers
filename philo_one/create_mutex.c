@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 16:56:34 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/28 18:42:54 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/03 15:40:11 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ pthread_mutex_t    *create_mutex(int64_t mutex_number)
     pthread_mutex_t *mutex_id;
     int             ret;
 
-    mutex_id = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * (mutex_number + 1));
+    mutex_id = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * mutex_number);
     if (!mutex_id)
     {
       write(2, "Malloc failled\n",
       ft_strlen("Malloc failled\n"));
       return (NULL);
     }
-    while (mutex_number >= 0)
+    while (--mutex_number >= 0)
     {
       ret = pthread_mutex_init(&mutex_id[mutex_number], NULL);
       if (ret)
@@ -35,7 +35,6 @@ pthread_mutex_t    *create_mutex(int64_t mutex_number)
         write(2, "\n", 1);
         return (NULL);
       }
-      mutex_number--;
     }
     return (mutex_id);
 }

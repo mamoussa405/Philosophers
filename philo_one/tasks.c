@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 16:16:27 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/06/02 11:35:31 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/03 13:13:24 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,26 @@
 
 void	eat(t_philo *philos)
 {
-	struct timeval tp;
-
-	gettimeofday(&tp, NULL);
-	philos->was_sleeping = 0;
-	printf("%zu %lld is eating\n", (size_t)(tp.tv_sec * TO_MSECOND
-	+ tp.tv_usec / TO_MSECOND), philos->philo_index);
+	philos->start = get_time();
+	pthread_mutex_lock(&philos->print);
+	printf("%zu %lld is eating\n", get_time(), philos->philo_index);
 	usleep(philos->time_to_eat * TO_USECOND);
+	pthread_mutex_unlock(&philos->print);
 }
 
 void	ft_sleep(t_philo *philos)
 {
-	struct timeval tp;
-
-	gettimeofday(&tp, NULL);
-	philos->was_sleeping = 1;
-	printf("%zu %lld is sleeping\n", (size_t)(tp.tv_sec * TO_MSECOND
-	+ tp.tv_usec / TO_MSECOND), philos->philo_index);
+	pthread_mutex_lock(&philos->print);
+	printf("%zu %lld is sleeping\n", get_time(), philos->philo_index);
 	usleep(philos->time_to_sleep * TO_USECOND);
+	pthread_mutex_unlock(&philos->print);
 }
 
 void	think(t_philo *philos)
 {
-	struct timeval tp;
-	
-	gettimeofday(&tp, NULL);
-	printf("%zu %lld is thinking\n", (size_t)(tp.tv_sec * TO_MSECOND
-	+ tp.tv_usec / TO_MSECOND), philos->philo_index);
-	if (philos->was_sleeping)
-		usleep((philos->time_to_die - philos->time_to_sleep) * TO_USECOND);
-	else
-		usleep(philos->time_to_die * TO_USECOND);
-	philos->was_sleeping = 0;
+	pthread_mutex_lock(&philos->print);
+	printf("%zu %lld is thinking\n", get_time(), philos->philo_index);
+	pthread_mutex_unlock(&philos->print);
 }
 
 void    *tasks(void *arg)
