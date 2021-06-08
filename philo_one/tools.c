@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 17:36:28 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/06/02 15:38:00 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/08 10:42:50 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ size_t get_time(void)
     return((tp.tv_sec * 1e3) + (tp.tv_usec / 1e3));
 }
 
-int64_t modulos(int64_t index, int64_t mod)
+void    ft_usleep(size_t time)
 {
-    int64_t res;
+    size_t  start_time;
+    size_t  cur_time;
 
-    res = index % mod;
-    if (index < 0)
-        res += mod;
-    return res;
+    start_time = get_time() * 1e3;
+    cur_time = 0;
+    while (cur_time <= time)
+    {
+        cur_time = get_time() * 1e3;
+        cur_time -= start_time;
+    }
 }
 
 size_t  ft_strlen(char *string)

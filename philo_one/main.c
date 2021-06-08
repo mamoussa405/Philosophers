@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 17:09:51 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/06/03 15:39:59 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/08 12:03:18 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ int	main(int argc, char **argv)
 	t_philo			*philos;	
 	pthread_mutex_t	*forks;
 
+	g_time = get_time();
 	/* Read and parese data and check if an error occured */
+	// arg[1] = time ot die, arg[2] = time to eat , arg[3] = time to sleep
 	data = read_data(argc, argv);
 	if (!data)
 		return (1);
@@ -118,7 +120,7 @@ int	main(int argc, char **argv)
 		return (1);
 	// /*******************************************************************/
 	free_philo(philos);
-	free_forks(forks, data->number_of_philo);
+	// free_forks(forks, data->number_of_philo);
 	free_data(data);
 	return (0);
 }

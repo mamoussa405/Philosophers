@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 17:06:26 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/05/28 18:38:02 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/07 20:46:01 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ uint8_t    free_forks(pthread_mutex_t *forks, size_t philo_number)
     size_t  i;
 
     i = 0;
-    while (philo_number-- >= 0)
+    while (--philo_number >= 0)
     {
         if (pthread_mutex_destroy(&forks[i]))
         {
