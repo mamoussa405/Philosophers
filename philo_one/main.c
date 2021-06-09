@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 17:09:51 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/06/08 12:03:18 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/09 18:44:35 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ uint8_t	check_args(int argc, char **argv, t_data *data)
 	size_t		length;
 
 	i = 1;
+	if (argc < 6)
+		data->num_of_t_to_eat = -1;
 	while (i < argc)
 	{
 		length = ft_strlen(argv[i]); /* Calculate the length of each arg */
