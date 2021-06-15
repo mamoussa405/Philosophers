@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 16:09:21 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/06/14 16:59:07 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/15 14:06:12 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void			controle_the_threads(t_philo *philos, t_data *data);
 uint8_t			check_if_args_valid(t_data *data);
 # define TO_USECOND 1e3
 # define TO_MSECOND 1e3
+# define RM_TIME 30000
 #endif

@@ -6,7 +6,7 @@
 /*   By: mamoussa <mamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/30 16:09:21 by mamoussa          #+#    #+#             */
-/*   Updated: 2021/06/14 15:48:26 by mamoussa         ###   ########.fr       */
+/*   Updated: 2021/06/15 14:01:31 by mamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void			*thread_controle(void *arg);
 void			check_if_args_valid(t_data *data);
 # define TO_USECOND 1e3
 # define TO_MSECOND 1e3
+# define RM_TIME 30000
 #endif
